@@ -1,0 +1,506 @@
+html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jefferson Roldão | Backend & Data Engineer</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --border: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-logo { font-weight: 800; font-size: 18px; color: var(--text-main); letter-spacing: 1px; }
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Container & Sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section { padding: 120px 0 20px 0; position: relative; }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-title i { color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero h2 { font-size: 24px; color: var(--accent); font-weight: 700; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase;}
+        .hero h1 { font-size: 64px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 30px; }
+        
+        .hook-box {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid var(--accent);
+            padding: 20px 25px;
+            font-size: 20px;
+            color: var(--text-main);
+            border-radius: 0 8px 8px 0;
+            max-width: 800px;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .hero p { font-size: 18px; color: var(--text-muted); max-width: 700px; margin-bottom: 40px; }
+
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+        /* Flagship Project (Leviathan) */
+        .flagship-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .flagship-card:hover { border-color: var(--accent); }
+
+        .flagship-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent);
+        }
+
+        .flagship-content h3 { font-size: 32px; margin-bottom: 15px; }
+        .flagship-content p { color: var(--text-muted); margin-bottom: 25px; font-size: 16px; }
+
+        .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .metric { background: var(--bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
+        .metric-val { font-size: 28px; font-weight: 800; color: var(--text-main); display: block; }
+        .metric-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Terminal Mockup */
+        .terminal { background: #000; border: 1px solid #333; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); height: 100%; display: flex; flex-direction: column;}
+        .terminal-header { background: #1a1b26; padding: 10px; display: flex; gap: 8px; border-bottom: 1px solid #333; }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .terminal-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #a9b1d6; line-height: 1.6; flex-grow: 1;}
+        .t-prompt { color: #7aa2f7; font-weight: bold; }
+        .t-cmd { color: #c0caf5; }
+        .t-warn { color: #e0af68; }
+        .t-err { color: #f7768e; font-weight: bold; }
+        .t-succ { color: #9ece6a; }
+
+        /* Architecture Cards */
+        .arch-card {
+            background: var(--bg);
+            border: 1px dashed var(--border);
+            padding: 30px;
+            border-radius: 12px;
+            height: 100%;
+        }
+        .arch-card h3 { font-size: 20px; margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 10px;}
+        .arch-card i { color: var(--accent); }
+        .arch-card p { font-size: 15px; color: var(--text-muted); }
+
+        /* Other Projects Cards */
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .project-card i { font-size: 32px; color: var(--accent); margin-bottom: 20px; }
+        .project-card h3 { font-size: 22px; margin-bottom: 10px; }
+        .project-card p { font-size: 15px; color: var(--text-muted); flex-grow: 1; margin-bottom: 20px; }
+
+        /* Tags */
+        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            padding: 6px 14px;
+            background: rgba(56, 189, 248, 0.05);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Stack Section */
+        .stack-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px;}
+        .stack-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Code Block */
+        pre { background: #000; padding: 25px; border-radius: 12px; border: 1px solid var(--border); color: #e2e8f0; font-family: 'JetBrains Mono', Courier, monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; margin-top: 30px;}
+        .sql-keyword { color: var(--accent); font-weight: bold; }
+        .sql-string { color: var(--success); }
+        .sql-comment { color: #64748b; font-style: italic; }
+
+        /* Footer / Contact */
+        footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 100px;
+        }
+        footer h2 { font-size: 40px; margin-bottom: 20px; }
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            transition: border-color 0.3s;
+        }
+        .contact-link:hover { border-color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 48px; }
+            .flagship-card { grid-template-columns: 1fr; padding: 30px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">JEFFERSON<span>.DEV</span></div>
+        <div class="nav-links">
+            <a href="#flagship">Motor Principal</a>
+            <a href="#arquitetura">Arquitetura</a>
+            <a href="#ecosystem">Outros Projetos</a>
+            <a href="#stack">Hard Skills</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <h2>Data Engineer & Backend Architect</h2>
+            <h1>Arquitetando sistemas que escalam<br>com hardware limitado.</h1>
+            
+            <div class="hook-box">
+                Otimização profunda de banco de dados e engenharia backend raiz. Focado em processar Big Data localmente sem a dependência ou os custos inflados de infraestruturas em nuvem.
+            </div>
+
+            <p>Especialista no desenvolvimento de pipelines headless, bancos relacionais massivos e sistemas orientados a eventos para mitigar riscos corporativos e automatizar fluxos complexos.</p>
+        </section>
+
+        <!-- FLAGSHIP PROJECT (LEVIATHAN) -->
+        <section id="flagship">
+            <div class="section-title"><i class="fa-solid fa-server"></i> Sistema Core: Leviathan Data Engine</div>
+            
+            <div class="flagship-card">
+                <div class="flagship-content">
+                    <h3 style="color: var(--text-main);">Auditoria Forense Massiva</h3>
+                    <p>Motor analítico 100% On-Premise focado em mineração de dados governamentais. O sistema detecta autonomamente inconsistências financeiras graves, formação de cartéis e burla de sanções aplicando 16 regras estatísticas complexas.</p>
+                    
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <span class="metric-val" style="color: var(--accent);">+213M</span>
+                            <span class="metric-label">Registros Processados</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-val" style="color: var(--warning);">&lt;1.8GB</span>
+                            <span class="metric-label">Consumo Max RAM (i3)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-val" style="color: var(--success);">18 Min</span>
+                            <span class="metric-label">Tempo Execução (Full Scan)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-val">120GB+</span>
+                            <span class="metric-label">Volume Ingerido</span>
+                        </div>
+                    </div>
+
+                    <div class="tags-container">
+                        <span class="tag">PostgreSQL 18</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">SQL Optimization</span>
+                        <span class="tag">LLM Air-Gapped</span>
+                    </div>
+                </div>
+
+                <!-- Proof of Execution (Terminal) -->
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot" style="background: #ef4444;"></div>
+                        <div class="terminal-dot" style="background: #f59e0b;"></div>
+                        <div class="terminal-dot" style="background: #10b981;"></div>
+                        <span style="font-size: 11px; color: #565f89; margin-left: auto;">root@leviathan-engine</span>
+                    </div>
+                    <div class="terminal-body">
+                        <span class="t-prompt">jefferson@server:~$</span> <span class="t-cmd">python engine.py --audit=full</span><br>
+                        <span style="color: #565f89;">[14:32:01]</span> Conectando PostgreSQL (Localhost)... <span class="t-succ">OK</span><br>
+                        <span style="color: #565f89;">[14:32:02]</span> Lendo 'empresas' (53.6M) e 'despesas' (31M)... <span class="t-succ">OK</span><br>
+                        <span style="color: #565f89;">[14:32:04]</span> Executando Anomaly Engine (16 regras)... <br>
+                        <br>
+                        <span class="t-warn">[!] ALERTA: ANOMALIA DE LASTRO FINANCEIRO</span><br>
+                        <span class="t-err">[-] ALVO DETECTADO: CNPJ 14.756.414/0001-50</span><br>
+                        &nbsp;&nbsp;&nbsp;Capital Social: R$ 0.00<br>
+                        &nbsp;&nbsp;&nbsp;Repasses Públicos: R$ 39.027.120,00<br>
+                        <br>
+                        <span style="color: #565f89;">[14:40:00]</span> 213M registros auditados em 18min.<br>
+                        <span class="t-prompt">jefferson@server:~$</span> <span class="t-cmd">_</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DECISÕES TÉCNICAS (O PENSAMENTO DO ARQUITETO) -->
+        <section id="arquitetura" style="padding-top: 60px;">
+            <div class="section-title"><i class="fa-solid fa-brain"></i> Arquitetura & Decisões Técnicas</div>
+            <p style="font-size: 18px; color: var(--text-muted); max-width: 900px; margin-bottom: 40px;">
+                O Leviathan foi projetado sob a premissa de que <strong>modelagem correta supera hardware caro</strong>. A engine opera localmente, priorizando eficiência de I/O e estrutura relacional ao invés de alocação excessiva de memória.
+            </p>
+
+            <div class="grid-3">
+                <div class="arch-card">
+                    <h3><i class="fa-solid fa-database"></i> Modelagem & Índices</h3>
+                    <p>Normalização estrita e uso estratégico de índices <strong>B-Tree e GIN</strong>. Eliminação de <i>Full Table Scans</i> permite executar joins entre tabelas de 50+ milhões de linhas em segundos.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><i class="fa-solid fa-gears"></i> Execução no SGBD</h3>
+                    <p>As 16 regras de negócio são executadas <strong>diretamente no PostgreSQL</strong> via queries OLAP complexas. O overhead de transferir 120GB para memória via Pandas/Python foi completamente eliminado.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><i class="fa-solid fa-shield-halved"></i> Infra Air-Gapped</h3>
+                    <p>Pipeline rodando 100% on-premise. Garantia total de conformidade legal (LGPD) e sigilo forense, com uso de IA local (Ollama) para geração de dossiês textuais sem evasão para a nuvem.</p>
+                </div>
+            </div>
+
+            <!-- Código SQL como Prova de Conceito -->
+            <pre>
+<span class="sql-comment">-- PROOF OF WORK: Query analítica real executada na engine.</span>
+<span class="sql-comment">-- Otimizada para indexação B-Tree cruzando 53M x 31M de registros localmente.</span>
+
+<span class="sql-keyword">SELECT</span> 
+    e.cnpj_basico,
+    e.razao_social,
+    <span class="sql-keyword">SUM</span>(<span class="sql-keyword">CAST</span>(<span class="sql-keyword">REPLACE</span>(<span class="sql-keyword">REPLACE</span>(f.c14, <span class="sql-string">'.'</span>, <span class="sql-string">''</span>), <span class="sql-string">','</span>, <span class="sql-string">'.'</span>) <span class="sql-keyword">AS NUMERIC</span>)) <span class="sql-keyword">as</span> total_recebido
+<span class="sql-keyword">FROM</span> empresas e
+<span class="sql-keyword">JOIN</span> ft_despesa f <span class="sql-keyword">ON LEFT</span>(f.c15, 8) = e.cnpj_basico
+<span class="sql-keyword">WHERE</span> e.capital_social = 0
+<span class="sql-keyword">GROUP BY</span> e.cnpj_basico, e.razao_social
+<span class="sql-keyword">HAVING SUM</span>(<span class="sql-keyword">CAST</span>(<span class="sql-keyword">REPLACE</span>(<span class="sql-keyword">REPLACE</span>(f.c14, <span class="sql-string">'.'</span>, <span class="sql-string">''</span>), <span class="sql-string">','</span>, <span class="sql-string">'.'</span>) <span class="sql-keyword">AS NUMERIC</span>)) > 1000000;
+            </pre>
+        </section>
+
+        <!-- ECOSSISTEMA E OUTROS PROJETOS -->
+        <section id="ecosystem">
+            <div class="section-title"><i class="fa-solid fa-layer-group"></i> Ecossistema & Outros Projetos</div>
+            <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 40px; max-width: 900px;">
+                Além do processamento massivo de dados, atuo na construção de infraestruturas logísticas, sistemas de telemetria IoT e automações baseadas em eventos.
+            </p>
+            
+            <div class="grid-3">
+                <div class="project-card">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <h3>Hospital TMS</h3>
+                    <p>Sistema de rastreabilidade hospitalar operando com telemetria contínua. Evita perda de ativos sensíveis e garante auditoria sanitária.</p>
+                    <div class="tags-container" style="margin-top: auto;">
+                        <span class="tag">InfluxDB</span>
+                        <span class="tag">MQTT</span>
+                        <span class="tag">FastAPI</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <h3>PSAE Logistics</h3>
+                    <p>Plataforma de gestão para controle de ativos operacionais. Arquitetura de banco modelada para mapeamento de fluxo logístico em tempo real.</p>
+                    <div class="tags-container" style="margin-top: auto;">
+                        <span class="tag">Backend</span>
+                        <span class="tag">API REST</span>
+                        <span class="tag">SQL</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <i class="fa-solid fa-robot"></i>
+                    <h3>AI Video Automation</h3>
+                    <p>Pipeline assíncrono headless para criação automatizada de conteúdo. Orquestra LLM para roteirização, TTS para narração e publicação via API.</p>
+                    <div class="tags-container" style="margin-top: auto;">
+                        <span class="tag">Python</span>
+                        <span class="tag">LLM</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <i class="fa-solid fa-spider"></i>
+                    <h3>Data Scraping Engine</h3>
+                    <p>Sistema de coleta massiva de dados com bypass de rate-limits governamentais, sanitização de encodings legados e armazenamento estruturado.</p>
+                    <div class="tags-container" style="margin-top: auto;">
+                        <span class="tag">Python</span>
+                        <span class="tag">Requests</span>
+                        <span class="tag">Data Quality</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <h3>Event Alert System</h3>
+                    <p>Microserviço de notificações automatizadas via Telegram acionado por gatilhos de banco de dados e eventos críticos do servidor.</p>
+                    <div class="tags-container" style="margin-top: auto;">
+                        <span class="tag">Webhooks</span>
+                        <span class="tag">Bot API</span>
+                        <span class="tag">Event-Driven</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <i class="fa-solid fa-terminal"></i>
+                    <h3>Server Automation Scripts</h3>
+                    <p>Conjunto de scripts operacionais (Linux) para deploy autônomo, rotinas de backup de banco de dados e execução agendada de ETLs.</p>
+                    <div class="tags-container" style="margin-top: auto;">
+                        <span class="tag">Bash</span>
+                        <span class="tag">Cron</span>
+                        <span class="tag">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK TÉCNICA -->
+        <section id="stack">
+            <div class="section-title"><i class="fa-solid fa-screwdriver-wrench"></i> Hard Skills & Stack Base</div>
+            <div class="stack-grid">
+                <div class="stack-item"><i class="fa-solid fa-database" style="color: var(--accent);"></i> PostgreSQL (B-Tree/GIN)</div>
+                <div class="stack-item"><i class="fa-brands fa-python" style="color: var(--accent);"></i> Python</div>
+                <div class="stack-item"><i class="fa-solid fa-bolt" style="color: var(--accent);"></i> FastAPI</div>
+                <div class="stack-item"><i class="fa-brands fa-docker" style="color: var(--accent);"></i> Docker</div>
+                <div class="stack-item"><i class="fa-solid fa-server" style="color: var(--accent);"></i> Redis</div>
+                <div class="stack-item"><i class="fa-solid fa-chart-line" style="color: var(--accent);"></i> InfluxDB</div>
+                <div class="stack-item"><i class="fa-solid fa-network-wired" style="color: var(--accent);"></i> MQTT (IoT)</div>
+                <div class="stack-item" style="border-color: var(--accent);"><i class="fa-solid fa-code" style="color: var(--accent);"></i> SQL Performance</div>
+                <div class="stack-item" style="border-color: var(--accent);"><i class="fa-solid fa-filter" style="color: var(--accent);"></i> ETL Pipelines</div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact">
+        <div class="container">
+            <h2 style="color: var(--text-main);">Pronto para resolver problemas de infraestrutura?</h2>
+            <p style="font-size: 20px; color: var(--text-muted); max-width: 700px; margin: 0 auto;">Busco oportunidades onde o foco esteja na arquitetura eficiente de sistemas e não apenas em alugar mais servidores na nuvem.</p>
+            
+            <a href="https://www.linkedin.com/in/jeffersonroldao" target="_blank" class="contact-link">
+                <i class="fa-brands fa-linkedin" style="color: var(--accent);"></i> Conectar no LinkedIn
+            </a>
+            
+            <p style="margin-top: 40px; font-size: 14px; color: var(--text-muted);">
+                <i class="fa-solid fa-location-dot"></i> Gravataí, RS - Brasil<br><br>
+                © 2026 Jefferson Roldão — Engenharia de Dados & Backend
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
